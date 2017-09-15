@@ -2,7 +2,8 @@
 1. grafico del prrulises
 
 --para levantarlo:
-1. node index.js; para correr el archivo js y levantar el servidor.
+0. node install; en carpeta Graph para q instale todas los modulos de node
+1. node index.js; en carpeta Graph para correr el archivo js y levantar el servidor.
 2. dotnet run; en carpeta rec1, rec2 y rec3; para q keden esperando...
 3. dotnet run; en carpeta send; enviar como loko xd
 4. abrir navegador y entrar ah: localhost:8080
