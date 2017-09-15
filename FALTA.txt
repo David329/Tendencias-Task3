@@ -1,3 +1,8 @@
-1. parsear el json a objeto y hacer el grafico
-2. agregar el Rec2,
-3. Desde send modificar hacia q cola envia
+--falta:
+1. grafico del prrulises
+
+--para levantarlo:
+1. node index.js; para correr el archivo js y levantar el servidor.
+2. dotnet run; en carpeta rec1, rec2 y rec3; para q keden esperando...
+3. dotnet run; en carpeta send; enviar como loko xd
+4. abrir navegador y entrar ah: localhost:8080

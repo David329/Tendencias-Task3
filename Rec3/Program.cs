@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace Rec2
+namespace Rec3
 {
     class Program
     {
@@ -18,14 +18,14 @@ namespace Rec2
                 channel.ExchangeDeclare(exchange: "direct_logs",type: "direct");
                 var queueName = channel.QueueDeclare().QueueName;
 
-                var severity =  "creditcard";
+                var severity =  "cash";
 
                 //foreach(var severity in args)//si hay mas colas
                 //{
                     channel.QueueBind(queue: queueName,exchange: "direct_logs",routingKey: severity);
                 //}
 
-                Console.WriteLine(" [*] Esperando los mensaje, Canal: creditcard");
+                Console.WriteLine(" [*] Esperando los mensaje, Canal: cash");
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>

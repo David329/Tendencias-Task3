@@ -1,16 +1,27 @@
 module.exports = function (app) {
 
+    var t1 = 0;
+    var t2 = 0;
+    var t3 = 0;
     //POST
-    addUsuario = function (req, res) {
+    addPedido = function (req, res) {
 
-var JsonObject= JSON.parse(req.body.pedido);
-console.log(JsonObject.tipo);
-console.log(JsonObject.prod.nombre);
-// console.log(req.body.pedido);
+        var JsonObject = JSON.parse(req.body.pedido);
 
-        res.send("asd");
+        if (JsonObject.tipo == "omnicanal") t1++;
+        else if (JsonObject.tipo == "creditcard") t2++;
+        else if (JsonObject.tipo == "cash") t3++;
+
+        // console.log(JsonObject.tipo);
+        // console.log(JsonObject.prod.nombre);
+        console.log("Omnicanal: " + t1.toString() + " CreditCard: " + t2.toString() + " Cash: " + t3.toString());
+        res.send("null");//no es necesario enviarle una respuesta a rec1,2,3
+    };
+    getPedido = function (req, res) {
+        res.send("Omnicanal: " + t1.toString() + " CreditCard: " + t2.toString() + " Cash: " + t3.toString());
     };
 
-    //API Routes Usuarios
-    app.post('/usuarios', addUsuario);
+    //API Routes Pedidos
+    app.post('/pedidos', addPedido);
+    app.get('/pedidos', getPedido);
 }

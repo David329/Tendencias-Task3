@@ -18,22 +18,14 @@ namespace Rec1
                 channel.ExchangeDeclare(exchange: "direct_logs",type: "direct");
                 var queueName = channel.QueueDeclare().QueueName;
 
-                var severity = (args.Length > 0) ? args[0] : "info";
-                // if(args.Length < 1)
-                // {
-                //     Console.Error.WriteLine("Usage: {0} [info] [warning] [error]",Environment.GetCommandLineArgs()[0]);
-                //     Console.WriteLine(" Press [enter] to exit.");
-                //     Console.ReadLine();
-                //     Environment.ExitCode = 1;
-                //     return;
-                // }
+                var severity =  "omnicanal";
 
                 //foreach(var severity in args)//si hay mas colas
                 //{
                     channel.QueueBind(queue: queueName,exchange: "direct_logs",routingKey: severity);
                 //}
 
-                Console.WriteLine(" [*] Waiting for messages.");
+                Console.WriteLine(" [*] Esperando los mensaje, Canal: omnicanal");
 
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
@@ -42,13 +34,13 @@ namespace Rec1
                     var message = Encoding.UTF8.GetString(body);
                     var routingKey = ea.RoutingKey;
                     Console.WriteLine(" [x] Received '{0}':'{1}'",routingKey, message);
-                    var response = Http.Post("http://localhost:8080/usuarios", new NameValueCollection() {
+                    var response = Http.Post("http://localhost:8080/pedidos", new NameValueCollection() {
                         { "pedido", message }
                     });
                 };
                 channel.BasicConsume(queue: queueName,autoAck: true,consumer: consumer);
 
-                Console.WriteLine(" Press [enter] to exit.");
+                Console.WriteLine(" Presiona [enter] para salir");
                 Console.ReadLine();
             }
         }

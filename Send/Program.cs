@@ -16,7 +16,6 @@ namespace send
             {
                 channel.ExchangeDeclare(exchange: "direct_logs",type: "direct");
 
-                var severity = (args.Length > 0) ? args[0] : "info";
                 Pedido pedido=new Pedido();
                 while(true)
                 {
@@ -33,8 +32,9 @@ namespace send
                     string message = JsonConvert.SerializeObject(pedido);
 
                     var body = Encoding.UTF8.GetBytes(message);
-                    channel.BasicPublish(exchange: "direct_logs",routingKey: severity,basicProperties: null,body: body);
-                    Console.WriteLine(" [x] Sent '{0}':'{1}'", severity, message);
+                    //severity=tipo de pedido
+                    channel.BasicPublish(exchange: "direct_logs",routingKey: pedido.tipo,basicProperties: null,body: body);
+                    Console.WriteLine(" [x] Sent '{0}':'{1}'", pedido.tipo, message);
 
                     Console.WriteLine("Continuar?!(salir): ");
                     if(Console.ReadLine()=="salir")break;
