@@ -43,9 +43,8 @@ namespace Rec1
                     var routingKey = ea.RoutingKey;
                     Console.WriteLine(" [x] Received '{0}':'{1}'",routingKey, message);
                     var response = Http.Post("http://localhost:8080/usuarios", new NameValueCollection() {
-                        { "home", message }
+                        { "pedido", message }
                     });
-                    Console.WriteLine("Lusho: {0}",System.Text.Encoding.UTF8.GetString(response));
                 };
                 channel.BasicConsume(queue: queueName,autoAck: true,consumer: consumer);
 
