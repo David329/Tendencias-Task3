@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+    .divChart {
+        width: 800px;
+        height: 800px;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>Dashboard Pedidos</h1>
+<div>
+    <button onclick="getPedidos();">Obtener datos</button>
+</div>
+
+<div class="divChart">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script>
+
+    var tipos = [];
+    var cantidades = [];
+    function getPedidos() {
+        $.ajax({
+            url: "http://localhost:8080/pedidos",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            xhrFields: {
+              withCredentials: true
+            },
+            type: "GET",
+            success: function(result) {
+                console.log(result);
+                
+                for (var i = 0; i < result.length; i++) {
+                    var item = result[i];
+                    tipos.push(item.tipo);
+                    cantidades.push(item.cantidad);
+                }
+
+                generarCahrt(tipos,cantidades);
+            }
+        });
+    }
+
+    function generarCahrt(tipos,cantidades){
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: tipos,//["Omnicanal", "Credit Card", "Cash"],
+                datasets: [{
+                    label: 'Cantidad de pedidos',
+                    data: cantidades,//[12, 19, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        }); 
+    }
+</script>
+
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>-->
+</body>
+</html>

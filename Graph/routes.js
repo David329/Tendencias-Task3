@@ -18,7 +18,13 @@ module.exports = function (app) {
         res.send("null");//no es necesario enviarle una respuesta a rec1,2,3
     };
     getPedido = function (req, res) {
-        res.send("Omnicanal: " + t1.toString() + " CreditCard: " + t2.toString() + " Cash: " + t3.toString());
+        //res.send("Omnicanal: " + t1.toString() + " CreditCard: " + t2.toString() + " Cash: " + t3.toString());
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify([
+            {tipo: "Omnicanal", cantidad: t1},
+            {tipo: "CreditCard", cantidad: t2},
+            {tipo: "Cash", cantidad: t3},
+        ]));
     };
 
     //API Routes Pedidos
