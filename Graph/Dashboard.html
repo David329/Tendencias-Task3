@@ -40,20 +40,29 @@
             type: "GET",
             success: function(result) {
                 console.log(result);
+
+                tipos = [];
+                cantidades = [];
                 
                 for (var i = 0; i < result.length; i++) {
                     var item = result[i];
                     tipos.push(item.tipo);
                     cantidades.push(item.cantidad);
                 }
-
+                destruirChart();
                 generarCahrt(tipos,cantidades);
             }
         });
     }
 
+    function destruirChart() {
+        $("#myChart").remove(); // this is my <canvas> element
+        $(".divChart").append("<canvas id='myChart'></canvas>");
+    }
+
     function generarCahrt(tipos,cantidades){
         var ctx = document.getElementById("myChart").getContext('2d');
+        //ctx.clear();
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -83,7 +92,7 @@
                     }]
                 }
             }
-        }); 
+        });
     }
 </script>
 

@@ -11,7 +11,7 @@ namespace Rec3
     {
         public static void Main(string[] args)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost",Port= 5672 };
+            var factory = new ConnectionFactory() { HostName = "166.62.89.37",Port= 8080 };
             using(var connection = factory.CreateConnection())
             using(var channel = connection.CreateModel())
             {
